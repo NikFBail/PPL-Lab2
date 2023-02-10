@@ -44,3 +44,15 @@
 (= (safe-nth [1 2 3 4 5] -1) nil)
 
     ;;; Task 2 ;;;
+(->> [1 2 3] (map inc) (reduce +))
+
+;(macroexpand `(->> [1 2 3] (map inc) (reduce +)))
+; (clojure.core/reduce clojure.core/+ (clojure.core/map clojure.core/inc [1 2 3]))
+(->> `(1 2 3 4 5) (cons 0))
+(->> [:a :c] (add-values-for-keys {:a 2 :b "hi" :c 5}) (even?))
+
+
+    ;;; Extra Credit ;;;
+(defn add-values-for-keys-thread [hm keys]
+  "takes a hash map and a set of keys, reutrns the sum of all values bound to those keys using thread macro"
+  (->> keys (map hm) (filter identity) (reduce +)))
