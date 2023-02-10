@@ -50,7 +50,9 @@
 ; (clojure.core/reduce clojure.core/+ (clojure.core/map clojure.core/inc [1 2 3]))
 (->> `(1 2 3 4 5) (cons 0))
 (->> [:a :c] (add-values-for-keys {:a 2 :b "hi" :c 5}) (even?))
-
+;;; ->> passes the left-most expression as the last argument to the function on the right.
+;;; If there are more than one function, it passes the resulting expression of the first two expressions
+;;; down the line as the last argument.
 
     ;;; Extra Credit ;;;
 (defn add-values-for-keys-thread [hm keys]
