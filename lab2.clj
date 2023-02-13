@@ -6,18 +6,21 @@
   (reduce + (filter identity (map hm keys))))
 
 (= (add-values-for-keys {:a 2 :b true :c "apple" :d 5} #{:a :d}) 7)
+(= (add-values-for-keys {:a 2 :b 3 :c 1 :d 5} #{}) 0)
+(= (add-values-for-keys {:a 2 :b 3 :c 1 :d 5} #{:x :y}) 0)
+(= (add-values-for-keys {:a 2 :b 3 :c 1 :d 5} #{:a :d}) 7)
 
 ;;; Recursion ;;;
     ;;; Task 1 ;;;
 (defn min1 [coll]
   "takes a non-empty collection of numbers, returns the minimum element in the collection"
-  (loop [c coll m nil]
-    (if (empty? (rest (rest c)))
-      (min (first c) m)
-      (recur
-        ;(if (empty? (rest c))
-          (rest c) (min (first c) m)))))
-        ;(min (first c) m)))))
+  (loop [c coll m 1000] ; m cannot be initialized as nil
+    (if (empty? (rest c))
+      (min m (first c))
+      (recur (rest c) (min m (first c))))))
+
+(= -10 (min1 [0 -8 7 -10 10 7 0]))
+(= 100 (min1 [100]))
 
     ;;; Task 2 ;;;
 (defn take1 [num coll]
@@ -56,3 +59,8 @@
 (defn add-values-for-keys-thread [hm keys]
   "takes a hash map and a set of keys, reutrns the sum of all values bound to those keys using thread macro"
   (->> keys (map hm) (filter identity) (reduce +)))
+
+(= (add-values-for-keys-thread {:a 2 :b true :c "apple" :d 5} #{:a :d}) 7)
+(= (add-values-for-keys-thread {:a 2 :b 3 :c 1 :d 5} #{}) 0)
+(= (add-values-for-keys-thread {:a 2 :b 3 :c 1 :d 5} #{:x :y}) 0)
+(= (add-values-for-keys-thread {:a 2 :b 3 :c 1 :d 5} #{:a :d}) 7)
