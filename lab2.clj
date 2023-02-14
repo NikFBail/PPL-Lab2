@@ -16,7 +16,7 @@
   "takes a non-empty collection of numbers, returns the minimum element in the collection"
   (loop [c coll m (first coll)] ; m cannot be initialized as nil
     (if (empty? (rest c))
-      (min m (first c))
+      m
       (recur (rest c) (min m (first c))))))
 
 (= -10 (min1 [0 -8 7 -10 10 7 0]))
